@@ -1,0 +1,933 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RAG Document Intelligence Assistant</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <!-- =========================================================
+         AUTHENTICATION AREA
+         Visible BEFORE login
+    ========================================================== -->
+
+    <div id="loginPage" class="auth-page">
+
+        <div class="auth-card">
+
+            <div class="auth-brand">
+                <div class="auth-logo">R</div>
+
+                <h1>RAG Assistant</h1>
+
+                <p>Document Intelligence</p>
+            </div>
+
+
+            <!-- ================= LOGIN ================= -->
+
+            <div id="loginPanel" class="auth-panel">
+
+                <div class="auth-heading">
+                    <h2>Welcome back</h2>
+                    <p>Sign in to access your document intelligence workspace.</p>
+                </div>
+
+                <form id="loginForm">
+
+                    <div class="form-group">
+                        <label for="loginEmail">Email</label>
+
+                        <input
+                            type="email"
+                            id="loginEmail"
+                            placeholder="Enter your email"
+                            autocomplete="email"
+                            required
+                        >
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <div class="label-row">
+                            <label for="loginPassword">Password</label>
+
+                            <button
+                                type="button"
+                                id="forgotPasswordLink"
+                                class="text-button"
+                            >
+                                Forgot password?
+                            </button>
+                        </div>
+
+                        <input
+                            type="password"
+                            id="loginPassword"
+                            placeholder="Enter your password"
+                            autocomplete="current-password"
+                            required
+                        >
+
+                    </div>
+
+
+                    <label class="remember-row">
+
+                        <input
+                            type="checkbox"
+                            id="rememberMe"
+                        >
+
+                        <span>Remember me</span>
+
+                    </label>
+
+
+                    <button
+                        type="submit"
+                        class="primary-auth-button"
+                    >
+                        Login
+                    </button>
+
+
+                    <div
+                        id="loginMessage"
+                        class="auth-message"
+                    ></div>
+
+                </form>
+
+
+                <div class="auth-switch">
+
+                    <span>Don't have an account?</span>
+
+                    <button
+                        type="button"
+                        id="showSignupButton"
+                        class="text-button"
+                    >
+                        Sign up
+                    </button>
+
+                </div>
+
+            </div>
+
+
+            <!-- ================= SIGN UP ================= -->
+
+            <div
+                id="signupPanel"
+                class="auth-panel hidden"
+            >
+
+                <div class="auth-heading">
+
+                    <h2>Create your account</h2>
+
+                    <p>
+                        Create an account to use the RAG document intelligence workspace.
+                    </p>
+
+                </div>
+
+
+                <form id="signupForm">
+
+                    <div class="form-group">
+
+                        <label for="signupName">
+                            Name
+                        </label>
+
+                        <input
+                            type="text"
+                            id="signupName"
+                            placeholder="Enter your name"
+                            autocomplete="name"
+                            required
+                        >
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label for="signupEmail">
+                            Email
+                        </label>
+
+                        <input
+                            type="email"
+                            id="signupEmail"
+                            placeholder="Enter your email"
+                            autocomplete="email"
+                            required
+                        >
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label for="signupPassword">
+                            Password
+                        </label>
+
+                        <input
+                            type="password"
+                            id="signupPassword"
+                            placeholder="Create a password"
+                            autocomplete="new-password"
+                            required
+                        >
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label for="signupConfirmPassword">
+                            Confirm Password
+                        </label>
+
+                        <input
+                            type="password"
+                            id="signupConfirmPassword"
+                            placeholder="Confirm your password"
+                            autocomplete="new-password"
+                            required
+                        >
+
+                    </div>
+
+
+                    <button
+                        type="submit"
+                        class="primary-auth-button"
+                    >
+                        Create Account
+                    </button>
+
+
+                    <div
+                        id="signupMessage"
+                        class="auth-message"
+                    ></div>
+
+                </form>
+
+
+                <div class="auth-switch">
+
+                    <span>Already have an account?</span>
+
+                    <button
+                        type="button"
+                        id="showLoginButton"
+                        class="text-button"
+                    >
+                        Login
+                    </button>
+
+                </div>
+
+            </div>
+
+
+            <!-- ================= FORGOT PASSWORD ================= -->
+
+            <div
+                id="forgotPasswordPanel"
+                class="auth-panel hidden"
+            >
+
+                <div class="auth-heading">
+
+                    <h2>Forgot your password?</h2>
+
+                    <p>
+                        Enter your email and we'll help you reset your password.
+                    </p>
+
+                </div>
+
+
+                <form id="forgotPasswordForm">
+
+                    <div class="form-group">
+
+                        <label for="forgotEmail">
+                            Email
+                        </label>
+
+                        <input
+                            type="email"
+                            id="forgotEmail"
+                            placeholder="Enter your registered email"
+                            autocomplete="email"
+                            required
+                        >
+
+                    </div>
+
+
+                    <button
+                        type="submit"
+                        class="primary-auth-button"
+                    >
+                        Reset Password
+                    </button>
+
+
+                    <div
+                        id="forgotMessage"
+                        class="auth-message"
+                    ></div>
+
+                </form>
+
+
+                <div class="auth-switch">
+
+                    <button
+                        type="button"
+                        id="backToLoginButton"
+                        class="text-button"
+                    >
+                        ← Back to Login
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- =========================================================
+         MAIN APPLICATION
+         HIDDEN UNTIL LOGIN IS SUCCESSFUL
+    ========================================================== -->
+
+    <div
+        id="appWrapper"
+        class="app-wrapper hidden"
+    >
+
+        <!-- ================= SIDEBAR ================= -->
+
+        <aside class="sidebar">
+
+            <div class="sidebar-brand">
+
+                <div class="brand-icon">
+                    R
+                </div>
+
+                <div class="brand-text">
+
+                    <h1>RAG Assistant</h1>
+
+                    <p>Document Intelligence</p>
+
+                </div>
+
+            </div>
+
+
+            <button
+                id="newConversationButton"
+                class="new-conversation-button"
+            >
+                <span>+</span>
+                New Conversation
+            </button>
+
+
+            <div class="sidebar-section">
+
+                <div class="sidebar-section-title">
+                    WORKSPACE
+                </div>
+
+
+                <button
+                    id="dashboardNav"
+                    class="nav-item active"
+                >
+                    <span class="nav-icon">⌂</span>
+                    <span>Dashboard</span>
+                </button>
+
+
+                <button
+                    id="documentsNav"
+                    class="nav-item"
+                >
+                    <span class="nav-icon">▣</span>
+                    <span>Documents</span>
+                </button>
+
+
+                <button
+                    id="conversationsNav"
+                    class="nav-item"
+                >
+                    <span class="nav-icon">◌</span>
+                    <span>Conversations</span>
+                </button>
+
+            </div>
+
+
+            <div class="sidebar-section recent-section">
+
+                <div class="sidebar-section-title">
+                    RECENT CONVERSATIONS
+                </div>
+
+                <div id="conversationsList">
+                    <div class="empty-conversations">
+                        No conversations yet
+                    </div>
+                </div>
+
+            </div>
+
+
+            <div class="sidebar-bottom">
+
+                <button
+                    id="accountNav"
+                    class="account-card"
+                >
+
+                    <div
+                        id="accountAvatar"
+                        class="account-avatar"
+                    >
+                        U
+                    </div>
+
+                    <div class="account-details">
+
+                        <strong id="accountName">
+                            User
+                        </strong>
+
+                        <span id="accountEmail">
+                            user@example.com
+                        </span>
+
+                    </div>
+
+                    <span class="account-arrow">
+                        ›
+                    </span>
+
+                </button>
+
+
+                <div class="system-status">
+
+                    <span class="status-dot"></span>
+
+                    <div>
+
+                        <strong>
+                            System Online
+                        </strong>
+
+                        <span>
+                            RAG services connected
+                        </span>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </aside>
+
+
+        <!-- ================= MAIN CONTENT ================= -->
+
+        <main class="main-content">
+
+            <!-- ================= TOP BAR ================= -->
+
+            <header class="topbar">
+
+                <div class="topbar-title">
+
+                    <span
+                        id="pageEyebrow"
+                        class="eyebrow"
+                    >
+                        DOCUMENT INTELLIGENCE
+                    </span>
+
+                    <h2 id="pageTitle">
+                        Your knowledge workspace
+                    </h2>
+
+                </div>
+
+
+                <button
+                    id="uploadNavigationButton"
+                    class="upload-button"
+                >
+                    + Upload Document
+                </button>
+
+
+                <input
+                    type="file"
+                    id="fileInput"
+                    accept=".pdf,.docx"
+                    hidden
+                >
+
+            </header>
+
+
+            <!-- ================= DASHBOARD ================= -->
+
+            <section
+                id="dashboardView"
+                class="page-view"
+            >
+
+                <div class="dashboard-container">
+
+                    <section class="welcome-section">
+
+                        <div class="welcome-content">
+
+                            <span class="welcome-label">
+                                AI-POWERED DOCUMENT ANALYSIS
+                            </span>
+
+                            <h3>
+                                Understand your documents.
+                                <span>Ask smarter questions.</span>
+                            </h3>
+
+                            <p>
+                                Upload your PDF or DOCX documents and use
+                                retrieval-augmented generation to find,
+                                understand, and analyze information instantly.
+                            </p>
+
+                        </div>
+
+                    </section>
+
+
+                    <!-- ================= STATS ================= -->
+
+                    <section class="stats-grid">
+
+                        <div class="stat-card">
+
+                            <span class="stat-label">
+                                Documents
+                            </span>
+
+                            <strong id="documentCount">
+                                0
+                            </strong>
+
+                            <small>
+                                Uploaded documents
+                            </small>
+
+                        </div>
+
+
+                        <div class="stat-card">
+
+                            <span class="stat-label">
+                                Processing
+                            </span>
+
+                            <strong id="processingCount">
+                                0
+                            </strong>
+
+                            <small>
+                                Documents being analyzed
+                            </small>
+
+                        </div>
+
+
+                        <div class="stat-card">
+
+                            <span class="stat-label">
+                                RAG Engine
+                            </span>
+
+                            <strong>
+                                ONLINE
+                            </strong>
+
+                            <small>
+                                Vector retrieval active
+                            </small>
+
+                        </div>
+
+                    </section>
+
+
+                    <!-- ================= ASK ================= -->
+
+                    <section class="workspace-card">
+
+                        <div class="section-heading">
+
+                            <div>
+
+                                <span class="section-kicker">
+                                    ASK YOUR DOCUMENTS
+                                </span>
+
+                                <h3>
+                                    What would you like to know?
+                                </h3>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="question-area">
+
+                            <textarea
+                                id="questionInput"
+                                rows="5"
+                                placeholder="Ask a question about your uploaded documents..."
+                            ></textarea>
+
+
+                            <div class="question-footer">
+
+                                <span class="hint">
+                                    RAG will retrieve relevant document content before generating an answer.
+                                </span>
+
+
+                                <button
+                                    id="askButton"
+                                    class="ask-button"
+                                >
+                                    Ask Assistant →
+                                </button>
+
+                            </div>
+
+                        </div>
+
+
+                        <!-- ================= ANSWER ================= -->
+
+                        <div
+                            id="answerSection"
+                            class="answer-section hidden"
+                        >
+
+                            <div class="section-heading">
+
+                                <div>
+
+                                    <span class="section-kicker">
+                                        AI RESPONSE
+                                    </span>
+
+                                    <h3>
+                                        Answer
+                                    </h3>
+
+                                </div>
+
+                            </div>
+
+
+                            <div
+                                id="answerContent"
+                                class="answer-content"
+                            ></div>
+
+                        </div>
+
+
+                        <!-- ================= RECENT DOCUMENTS ================= -->
+
+                        <div class="documents-section">
+
+                            <div class="section-heading">
+
+                                <div>
+
+                                    <span class="section-kicker">
+                                        YOUR DOCUMENTS
+                                    </span>
+
+                                    <h3>
+                                        Recently uploaded
+                                    </h3>
+
+                                </div>
+
+
+                                <button
+                                    id="viewDocumentsButton"
+                                    class="secondary-button"
+                                >
+                                    View all →
+                                </button>
+
+                            </div>
+
+
+                            <div
+                                id="recentDocumentsList"
+                                class="document-grid"
+                            ></div>
+
+                        </div>
+
+                    </section>
+
+                </div>
+
+            </section>
+
+
+            <!-- ================= DOCUMENTS ================= -->
+
+            <section
+                id="documentsView"
+                class="page-view hidden"
+            >
+
+                <div class="page-container">
+
+                    <div class="page-heading">
+
+                        <span class="section-kicker">
+                            DOCUMENT LIBRARY
+                        </span>
+
+                        <h3>
+                            Your Documents
+                        </h3>
+
+                        <p>
+                            All documents uploaded to your RAG knowledge base.
+                        </p>
+
+                    </div>
+
+
+                    <div
+                        id="documentsGrid"
+                        class="document-grid large-grid"
+                    ></div>
+
+                </div>
+
+            </section>
+
+
+            <!-- ================= CONVERSATIONS ================= -->
+
+            <section
+                id="conversationsView"
+                class="page-view hidden"
+            >
+
+                <div class="page-container">
+
+                    <div class="page-heading">
+
+                        <span class="section-kicker">
+                            CHAT HISTORY
+                        </span>
+
+                        <h3>
+                            Conversations
+                        </h3>
+
+                        <p>
+                            Open a previous conversation and continue where you left off.
+                        </p>
+
+                    </div>
+
+
+                    <div
+                        id="recentConversations"
+                        class="conversation-list"
+                    ></div>
+
+                </div>
+
+            </section>
+
+
+            <!-- ================= ACCOUNT ================= -->
+
+            <section
+                id="accountView"
+                class="page-view hidden"
+            >
+
+                <div class="page-container">
+
+                    <div class="page-heading">
+
+                        <span class="section-kicker">
+                            ACCOUNT
+                        </span>
+
+                        <h3>
+                            Your Account
+                        </h3>
+
+                        <p>
+                            Manage your profile and account information.
+                        </p>
+
+                    </div>
+
+
+                    <div class="account-profile-card">
+
+                        <div
+                            id="accountLargeAvatar"
+                            class="large-account-avatar"
+                        >
+                            U
+                        </div>
+
+
+                        <div class="account-profile-details">
+
+                            <h3 id="accountPageName">
+                                User
+                            </h3>
+
+                            <p id="accountPageEmail">
+                                user@example.com
+                            </p>
+
+                            <span class="account-active">
+                                Account Active
+                            </span>
+
+                        </div>
+
+                    </div>
+
+
+                    <button
+                        id="logoutButton"
+                        class="logout-button"
+                    >
+                        Logout
+                    </button>
+
+                </div>
+
+            </section>
+
+
+            <!-- ================= CONVERSATION DETAIL ================= -->
+
+            <section
+                id="conversationDetailView"
+                class="page-view hidden"
+            >
+
+                <div class="page-container conversation-detail">
+
+                    <button
+                        id="backToConversations"
+                        class="back-button"
+                    >
+                        ← Back to Conversations
+                    </button>
+
+
+                    <div class="page-heading">
+
+                        <span class="section-kicker">
+                            CONVERSATION
+                        </span>
+
+                        <h3 id="conversationTitle">
+                            Conversation
+                        </h3>
+
+                    </div>
+
+
+                    <div
+                        id="chatContainer"
+                        class="chat-container"
+                    ></div>
+
+
+                    <div class="conversation-input-area">
+
+                        <textarea
+                            id="conversationQuestion"
+                            rows="3"
+                            placeholder="Continue this conversation..."
+                        ></textarea>
+
+
+                        <button
+                            id="conversationAskButton"
+                            class="ask-button"
+                        >
+                            Ask Assistant →
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <!-- ================= UPLOAD STATUS ================= -->
+
+            <div
+                id="uploadStatus"
+                class="upload-status hidden"
+            ></div>
+
+        </main>
+
+    </div>
+
+
+    <script src="script.js"></script>
+
+</body>
+</html>

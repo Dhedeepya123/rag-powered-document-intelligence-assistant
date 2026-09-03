@@ -1,0 +1,140 @@
+services:
+
+  # ==========================================
+  # PostgreSQL + PGVector
+  # ==========================================
+
+  postgres:
+    image: pgvector/pgvector:pg17
+    container_name: rag-postgres
+
+    environment:
+      POSTGRES_DB: ragdb
+      POSTGRES_USER: raguser
+      POSTGRES_PASSWORD: ragpassword
+
+    ports:
+      - "55432:5432"
+
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+    restart: unless-stopped
+
+
+  # ==========================================
+  # RabbitMQ
+  # ==========================================
+
+  rabbitmq:
+    image: rabbitmq:4-management
+    container_name: rag-rabbitmq
+
+    environment:
+      RABBITMQ_DEFAULT_USER: guest
+      RABBITMQ_DEFAULT_PASS: guest
+
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+
+    restart: unless-stopped
+
+
+  # ==========================================
+  # Spring Boot Backend
+  # ==========================================
+
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+
+    container_name: rag-backend
+
+    depends_on:
+      - postgres
+      - rabbitmq
+
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/ragdb
+      SPRING_DATASOURCE_USERNAME: raguser
+      SPRING_DATASOURCE_PASSWORD: ragpassword
+
+      SPRING_RABBITMQ_HOST: rabbitmq
+      SPRING_RABBITMQ_PORT: 5672
+      SPRING_RABBITMQ_USERNAME: guest
+      SPRING_RABBITMQ_PASSWORD: guest
+
+      SPRING_AI_OLLAMA_BASE_URL: http://host.docker.internal:11434
+      SPRING_AI_OLLAMA_EMBEDDING_OPTIONS_MODEL: nomic-embed-text
+
+      SPRING_AI_VECTORSTORE_PGVECTOR_INITIALIZE_SCHEMA: "true"
+      SPRING_AI_VECTORSTORE_PGVECTOR_INDEX_TYPE: HNSW
+      SPRING_AI_VECTORSTORE_PGVECTOR_DISTANCE_TYPE: COSINE_DISTANCE
+      SPRING_AI_VECTORSTORE_PGVECTOR_DIMENSIONS: "768"
+
+      SERVER_PORT: 8081
+
+    ports:
+      - "8082:8081"
+
+    volumes:
+      - ./uploads:/app/uploads
+      - ./output:/app/output
+
+    restart: unless-stopped
+
+
+  # ==========================================
+  # PySpark + Scala Spark Processing
+  # ==========================================
+
+  pyspark:
+    build:
+      context: .
+      dockerfile: pyspark-service/Dockerfile
+
+    container_name: rag-pyspark
+
+    depends_on:
+      - rabbitmq
+
+    environment:
+      RABBITMQ_HOST: rabbitmq
+      SCALA_CLI: /usr/local/bin/scala-cli
+      SCALA_FILE: /app/scala-service/src/MetadataProcessor.scala
+
+    volumes:
+      - ./uploads:/app/pyspark-service/uploads
+      - ./output:/app/pyspark-service/output
+
+    restart: unless-stopped
+
+
+  # ==========================================
+  # Frontend
+  # ==========================================
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+
+    container_name: rag-frontend
+
+    depends_on:
+      - backend
+
+    ports:
+      - "5501:80"
+
+    restart: unless-stopped
+
+
+# ==========================================
+# Volumes
+# ==========================================
+
+volumes:
+  postgres_data:

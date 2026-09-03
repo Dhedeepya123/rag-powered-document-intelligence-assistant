@@ -1,0 +1,12 @@
+target/
+output/
+uploads/
+.git/
+.gitignore
+.vscode/
+.idea/
+*.log
+__pycache__/
+*.pyc
+scala-service/.scala-build/
+scala-service/.bsp/
